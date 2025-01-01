@@ -7,7 +7,7 @@
 
 2. <i>Compile the stager and deliver it to the victim for execution </i>
 
-<code> gcc.exe .\<stager_c2>.c -o <steger_c2>.exe -lwininet </code>
+<code> gcc.exe <stager_c2>.c -o <steger_c2>.exe -lwininet </code>
 
 ![alt text](https://github.com/vivashu27/Sliver-C2_stager/blob/main/2.png)
 
